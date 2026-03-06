@@ -1,10 +1,12 @@
 "use client"
+import { Author } from "@/types/Author"
 
 import { useEffect, useState } from "react"
+import AuthorCard from "./AuthorCard"
 
 export default function AuthorsList() {
 
-    const [authors, setAuthors] = useState([])
+    const [authors, setAuthors] = useState<Author[]>([])
 
     useEffect(() => {
 
@@ -15,9 +17,12 @@ export default function AuthorsList() {
     }, [])
 
     return (
-        <div>
-            <p>Autores cargados: {authors.length}</p>
-        </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {authors.map( (author) => (
+                <AuthorCard key={author.id} author={author} />
+                ))}
+            </div>
+        
     )
 
 }

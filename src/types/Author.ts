@@ -1,5 +1,7 @@
+
 export interface Author {
   id: number
   name: string
-  bio: string
+  description: string
+  image: string
 }
