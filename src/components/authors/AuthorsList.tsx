@@ -10,11 +10,21 @@ export default function AuthorsList() {
 
     useEffect(() => {
 
-    fetch("http://localhost:8080/api/authors")
-        .then(res => res.json())
-        .then(data => setAuthors(data))
+        const fetchAuthors = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/api/authors")
+                const data = await response.json()
+                console.log(`Se cargaron ${data.length} autores`)
+                setAuthors(data)   
+            } catch (error) {
+                console.error("Error fetching authors:", error)
+            }
+        }
 
+        fetchAuthors()
     }, [])
+
+
 
     return (
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
