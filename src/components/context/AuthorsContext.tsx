@@ -4,8 +4,11 @@ import { Author } from "@/types/Author"
 import { createContext, useContext, useState, useEffect } from "react";
 
 type AuthorsContextType = {
-  authors: Author[]
-  setAuthors: (value: Author[] | ((prev: Author[]) => Author[])) => void
+    authors: Author[]
+    addAuthor: (author: Author) => void
+    editAuthor: (author: Author) => void
+    deleteAuthor: (id: number) => void
+    //setAuthors: (value: Author[] | ((prev: Author[]) => Author[])) => void
 }
 
 
@@ -33,23 +36,26 @@ export function AuthorsProvider ( { children }: { children: React.ReactNode}) {
     }, [])
     
     //Agregar Autor 
+    const addAuthor = (author: Author) => {
+        setAuthors(prev => [...prev, author])
+    }
 
-
-
-
-
-    //Eliminar Autor 
-
-
-
-    
+    //Modificar Autor 
+    const editAuthor = (updatedAuthor: Author) => {
+        setAuthors(prev => prev.map(author => author.id === updatedAuthor.id ? updatedAuthor : author))
+    }
     
     //Modificar Autor
+    const deleteAuthor = (id: number) => {
+        setAuthors(prev =>
+        prev.filter(author => author.id !== id)
+        )
+    }
 
 
 
     return (
-        <AuthorsContext.Provider value={{ authors, setAuthors }}>
+        <AuthorsContext.Provider value={{ authors, addAuthor, editAuthor, deleteAuthor }}>
             {children}
         </AuthorsContext.Provider>
     )
