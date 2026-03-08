@@ -4,18 +4,25 @@ import { useState } from "react"
 
 import { useAuthors } from "@/components/context/AuthorsContext"
 import { Author } from "@/types/Author"
+import { useRouter } from "next/navigation"
 
 
-
+type Props = {initialData?: Author}
 type Form = {name: string; birthDate: string; description: string; image: string };
 type Errors = {name?: string; birthDate?: string; description?: string; image?: string };
 
-export default function AuthorForm() {
+export default function AuthorForm({ initialData }: Props) {
 
-  const { addAuthor } = useAuthors()
+  const { editAuthor, addAuthor } = useAuthors()
+  const router = useRouter()
 
 
-  const [form, setForm] = useState<Form>({name:"", birthDate:"", description:"", image:"" });
+  const [form, setForm] = useState<Form>({
+    name: initialData?.name || "", 
+    birthDate: initialData?.birthDate ? new Date(initialData?.birthDate).toISOString().split("T")[0] : "", 
+    description: initialData?.description ||"", 
+    image: initialData?.image ||"" });
+  
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<{name?: boolean; birthDate?: boolean; description?: boolean; image?:boolean }>({});
   
@@ -32,15 +39,21 @@ export default function AuthorForm() {
     e.preventDefault()
 
     const newAuthor: Author = {
-      id: Date.now(),
+      id: initialData ? initialData.id : Date.now(),
       name: form.name,
       birthDate: new Date(form.birthDate),
       description: form.description,
       image: form.image
     }
 
-    addAuthor(newAuthor)
-    alert(`Author "${form.name}", created successfully`);
+    if (initialData) {
+      editAuthor(newAuthor)
+      alert(`Author "${form.name}", edited successfully`);
+    } else {
+      addAuthor(newAuthor)
+      alert(`Author "${form.name}", created successfully`);
+    }
+
 
     setForm({
       name: "",
@@ -48,6 +61,8 @@ export default function AuthorForm() {
       description: "",
       image: ""
     })
+
+    router.push("/authors")
   }
 
   //Validaciones

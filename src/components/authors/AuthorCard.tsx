@@ -1,6 +1,8 @@
 import { Author } from "@/types/Author"
 import { useAuthors } from "../context/AuthorsContext"
 
+import Link from "next/link"
+
 interface Props {
   author: Author
 }
@@ -15,9 +17,9 @@ export default function AuthorCard({ author }: Props) {
         <h2 className="text-xl font-semibold text-black">{author.name}</h2>
         <p className="text-black">{author.description}</p>
         <div className="grid grid-cols-2 gap-2 mt-auto">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded transition">
+          <Link href={`/edit/${author.id}`} className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded transition">
             Edit
-          </button>
+          </Link>
           <button onClick={() => deleteAuthor(author.id)} className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded transition">
             Delete
           </button>
