@@ -5,6 +5,7 @@ import { useState } from "react"
 import { useAuthors } from "@/components/context/AuthorsContext"
 import { Author } from "@/types/Author"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 
 type Props = {initialData?: Author}
@@ -201,6 +202,7 @@ export default function AuthorForm({ initialData }: Props) {
         <textarea
           id ="description"
           name="description"
+          rows={5}
           value={form.description}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -240,14 +242,24 @@ export default function AuthorForm({ initialData }: Props) {
           </p>
         )}
       </div>
-
-      <button
+      
+      <div className="flex justify-center gap-2 pt-4">
+        <button
         type="submit"
         disabled={!isValid}
-        className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-      >
-        Save Author
-      </button>
+        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded"
+        >
+          Save 
+        </button>
+        <Link
+          href="/authors"
+          className="bg-gray-400 hover:bg-gray-500 text-white py-2 px-6 rounded"
+        >
+          Cancel
+        </Link>
+
+      </div>
+      
 
     </form>
   )
