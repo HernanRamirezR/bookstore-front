@@ -42,7 +42,21 @@ describe("AuthorForm component", () => {
             expect(screen.getByLabelText(/description/i)).toBeInTheDocument();
             expect(screen.getByLabelText(/image/i)).toBeInTheDocument();
             expect(saveButton).toBeDisabled();
+        })
+    })
 
+    describe("interaccion en AuthorForm", () => {
+        test("blur en vacío muestra errores de campos", async ()=>{
+            const {user, nameInput, birthDateInput} = setup();
+
+            await user.click(nameInput);
+            await user.tab();
+
+            expect(await screen.findByText(/You must enter a name/i)).toBeInTheDocument();
+            expect(nameInput).toHaveAttribute("aria-invalid", "true");
+            expect(nameInput).toHaveAttribute("aria-describedby", "name-error");
+            
+        
         })
 
 
