@@ -183,7 +183,7 @@ export default function AuthorForm({ initialData }: Props) {
           onChange={handleChange}
           onBlur={handleBlur}
           aria-invalid={!!(touched.birthDate && errors.birthDate)}
-          aria-describedby={touched.birthDate && errors.birthDate ? "birthdate-error" : undefined}
+          aria-describedby={touched.birthDate && errors.birthDate ? "birthDate-error" : undefined}
           placeholder="Enter the author's birthdate"
           className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm 
                focus:outline-none focus:ring-2 focus:ring-blue-500 
